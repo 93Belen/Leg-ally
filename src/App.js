@@ -1,4 +1,4 @@
-import {Showcase} from './components/showcase/Showcase.jsx';
+import {Showcase} from './components/showcase/Showcase.js';
 import { appStyle } from './AppStyle.js';
 import { Form } from './components/form/Form.jsx';
 import { Map } from './components/map/Map.js';

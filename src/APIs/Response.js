@@ -117,9 +117,9 @@
     },
     "Arizona": {
         "exception_health": "Any",
-        "banned_after_weeks_since_LMP": 99,
+        "banned_after_weeks_since_LMP": 15,
         "exception_life": true,
-        "Last Updated": "2022-06-30T13:26:49.000Z"
+        "Last Updated": "2022-10-08T00:48:40.000Z"
     },
     "Minnesota": {
         "exception_health": "Any",
@@ -139,7 +139,8 @@
     "Indiana": {
         "exception_health": "Physical",
         "banned_after_weeks_since_LMP": 22,
-        "exception_life": true
+        "exception_life": true,
+        "Last Updated": "2022-09-22T16:16:50.000Z"
     },
     "Utah": {
         "exception_rape_or_incest": true,
@@ -197,15 +198,17 @@
     },
     "Ohio": {
         "exception_health": "Physical",
-        "banned_after_weeks_since_LMP": 6,
+        "banned_after_weeks_since_LMP": 22,
         "exception_life": true,
-        "Last Updated": "2022-06-24T22:39:26.000Z"
+        "Last Updated": "2022-09-14T21:34:20.000Z"
     },
     "West Virginia": {
+        "exception_rape_or_incest": true,
         "exception_health": "Physical",
-        "banned_after_weeks_since_LMP": 22,
+        "banned_after_weeks_since_LMP": 0,
         "exception_fetal": "Lethal fetal anomaly",
-        "exception_life": true
+        "exception_life": true,
+        "Last Updated": "2022-09-16T18:01:16.000Z"
     },
     "Wisconsin": {
         "exception_health": "Major Bodily Function",

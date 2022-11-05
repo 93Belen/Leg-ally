@@ -1,4 +1,4 @@
-import { svg } from "../fonts_colors";
+import { colors, fonts, svg } from "../fonts_colors";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { selectAge, selectAllStates, selecthealthRisk, selectLmp, selectMinorsInfo, selectRape, selectState } from "../../redux/Store&Selectors/selectors";
@@ -28,13 +28,45 @@ export const Map = () => {
     let healthRisk = healthInput;
 
     useEffect(() => {
+        // Function that will show label with info when mouse over State
+        const showLabel = (e) => {
+            let message = e.target.dataset.display
+            e.target.style.stroke = 'gold';
+            e.target.style.strokeWidth = '1';
+            //let p = document.createElement("http://www.w3.org/2000/svg", "text");
+            const p = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            p.setAttribute("x", "51%");
+            p.setAttribute("y", "95%");
+            p.setAttribute("textLength", "fit-content");
+            p.setAttribute("fill", "black");
+            p.setAttribute("class", "created-p");
+            p.style.fontFamily = fonts.titleLight.fontFamily;
+            p.style.fontSize = '17px';
+            e.target.parentNode.appendChild(p);
+            p.innerHTML = message;
+            console.log(p);
+            
+        }
+        const goBackToNormal = (e) => {
+            e.target.style.stroke = 'black';
+            e.target.style.strokeWidth = '0.5';
+            let createdP = document.getElementsByClassName('created-p');
+            while(createdP[0]){
+                createdP[0].remove();
+            }
+        }
+
+
+
         // Check Lmp -> Get states where is legal regarding lmp (the states where abortion is ilegal have lmp = 0. So those are discarted here as well)
         for(const state in allStates){
+            // Grab state
+            let stateSvg = document.getElementById(`${state.toLowerCase()}`);
             // If abortion is ilegal
             if(allStates[state]["banned_after_weeks_since_LMP"] === 0){
-                let stateSvg = document.getElementById(`${state.toLowerCase()}`);
                 if(stateSvg !== null){
                     stateSvg.style.fill = red;
+                    stateSvg.dataset.display= "Illegal in most cases";
                 }
                 // If there is a special case
                 if(healthRisk){
@@ -42,32 +74,32 @@ export const Map = () => {
                     if(allStates[state]["exception_health"]){
                         // If health excepcions are restricted
                         if(allStates[state]["exception_health"] !== 'Any' && allStates[state]["exception_health"] !== true){
-                            let stateSvg = document.getElementById(`${state.toLowerCase()}`);
                             if(stateSvg !== null){
                                 stateSvg.style.fill = yellow;
+                                stateSvg.dataset.display= "Few exceptions when there are health risks";
                             }
                         }
                         // If any health risk matters
                         else {
-                            let stateSvg = document.getElementById(`${state.toLowerCase()}`);
                             if(stateSvg !== null){
                                 stateSvg.style.fill = green;
+                                stateSvg.dataset.display= "Legal when there are health risks";
                             }
                         }
                     }
                     // If life risk
                     else if(allStates[state]["exception_life"]){
-                        let stateSvg = document.getElementById(`${state.toLowerCase()}`);
                             if(stateSvg !== null){
                                 stateSvg.style.fill = orange;
+                                stateSvg.dataset.display= "Exceptions only when there is risk of death";
                             }
                     }
                 }
                 if(rape){
                     if(allStates[state]["exception_rape_or_incest"]){
-                        let stateSvg = document.getElementById(`${state.toLowerCase()}`);
                             if(stateSvg !== null){
                                 stateSvg.style.fill = green;
+                                stateSvg.dataset.display= "Legal in case of rape or incest";
                             }
                     }
                 }
@@ -80,17 +112,17 @@ export const Map = () => {
                     // If minor is adult in one state (some states consider adult after 16)
                     if(minorsInfo[state]["below_age"] < age){
                         // Turn light green
-                        let stateSvg = document.getElementById(`${state.toLowerCase()}`);
                         if(stateSvg !== null){
                             stateSvg.style.fill = lightgreen;
+                            stateSvg.dataset.display= "Considered adult";
                         }
                     }
                     // If minor can get abortion by own decision
                     else if(minorsInfo[state]["allows_minor_to_consent_to_abortion"]){
                         // If State is not null (ex: hawaii is missing). Turn state green
-                        let stateSvg = document.getElementById(`${state.toLowerCase()}`);
                         if(stateSvg !== null){
                             stateSvg.style.fill = green;
+                            stateSvg.dataset.display= "Legal";
                         }
                     }
                     // legal with parents consent
@@ -98,29 +130,28 @@ export const Map = () => {
 
                         // if only one parent required turn yellow
                         if(minorsInfo[state]["parents_required"] === 1){
-                            let stateSvg = document.getElementById(`${state.toLowerCase()}`);
                             if(stateSvg !== null){
                                 stateSvg.style.fill = yellow;
+                                stateSvg.dataset.display= "Legal with one parental consent";
                             }
                         }
                         // If two parents are required turn orange
                         else if(minorsInfo[state]["parents_required"] === 2){
-                            let stateSvg = document.getElementById(`${state.toLowerCase()}`);
                             if(stateSvg !== null){
                                 stateSvg.style.fill = orange;
+                                stateSvg.dataset.display= "Legal with parental consent from both parents";
                             }
                         }
                     }
                     // If parental notification required turn orange
                     else if(minorsInfo[state]["parental_notification_required"]){
-                        let stateSvg = document.getElementById(`${state.toLowerCase()}`);
                         if(stateSvg !== null){
                                 stateSvg.style.fill = orange;
+                                stateSvg.dataset.display= "Legal with parental notification";
                         }
                     }
                     // Go back to original
                     else {
-                        let stateSvg = document.getElementById(`${state.toLowerCase()}`);
                         if(stateSvg !== null){
                             stateSvg.style.fill = '';
                         }
@@ -129,18 +160,18 @@ export const Map = () => {
                 // If adult
                 else {
                     // Turn green
-                    let stateSvg = document.getElementById(`${state.toLowerCase()}`);
                     if(stateSvg !== null){
                         stateSvg.style.fill = green;
+                        stateSvg.dataset.display= "Legal";
                     }
                 }
 
             }
             // If weeks since lmp is more than allowed
             else {
-                let stateSvg = document.getElementById(`${state.toLowerCase()}`);
-                if(stateSvg !== null){
+                if(stateSvg !== null && allStates[state]["banned_after_weeks_since_LMP"] !== 0){
                     stateSvg.style.fill = red;
+                    stateSvg.dataset.display= "Too long since last menstrual period";
                 }
                 // If there is a special case
                 if(healthRisk){
@@ -148,38 +179,52 @@ export const Map = () => {
                     if(allStates[state]["exception_health"]){
                         // If health excepcions are restricted
                         if(allStates[state]["exception_health"] !== 'Any' && allStates[state]["exception_health"] !== true){
-                            let stateSvg = document.getElementById(`${state.toLowerCase()}`);
                             if(stateSvg !== null){
                                 stateSvg.style.fill = yellow;
+                                stateSvg.dataset.display= "Few exceptions when there are health risks";
                             }
                         }
                         // If any health risk matters
                         else {
-                            let stateSvg = document.getElementById(`${state.toLowerCase()}`);
                             if(stateSvg !== null){
                                 stateSvg.style.fill = green;
+                                stateSvg.dataset.display= "Legal when there are health risks";
                             }
                         }
                     }
                     // If life risk
                     else if(allStates[state]["exception_life"]){
-                        let stateSvg = document.getElementById(`${state.toLowerCase()}`);
                             if(stateSvg !== null){
                                 stateSvg.style.fill = orange;
+                                stateSvg.dataset.display= "Legal when there is risk of death";
                             }
                     }
                 }
                 if(rape){
                     if(allStates[state]["exception_rape_or_incest"]){
-                        let stateSvg = document.getElementById(`${state.toLowerCase()}`);
                             if(stateSvg !== null){
                                 stateSvg.style.fill = green;
+                                stateSvg.dataset.display= "Legal in case of rape or incest";
                             }
                     }
                 }
             }
+
+            // Add hover effect
+            if(stateSvg !== null){
+                stateSvg.addEventListener('mouseover', showLabel);
+                stateSvg.addEventListener('mouseout', goBackToNormal);
+
+            }
+
+
         }
+
+
+        
     })
+
+
 
     return (
         <svg style={svg} viewBox="0 0 500 250" fill="none" xmlns="http://www.w3.org/2000/svg">

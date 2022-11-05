@@ -3,17 +3,17 @@ import { useDispatch } from "react-redux";
 import store from '../../redux/Store&Selectors/Store.js';
 import { getAbortionInfo, getMinorAbortionInfo } from "../../APIs/abortionApi";
 import { useNavigate } from 'react-router';
+import { response } from '../../APIs/Response.js';
 
 
 export const FormButton = () => {
     let dispatch = useDispatch();
     let navigate = useNavigate();
     // Once the button is clicked
-    const onClick = (e) => {
+    const onClick = async(e) => {
         e.preventDefault();
 
         // Get inputs
-        let state = document.getElementById('state-input').value;
         let lmp = document.getElementById('wlp-input').value;
         let age = Number(document.getElementById('age-input').value);
         let rape = document.getElementById('rape-incest-input').checked;
@@ -43,7 +43,6 @@ export const FormButton = () => {
 
         // inputs object
         let inputSlice = {
-            homeState: state,
             lmp: weeksSinceLmp,
             age: age,
             rape: rape,
@@ -53,13 +52,15 @@ export const FormButton = () => {
 
         // Set all states but homeState slice
         dispatch({type: 'inputs/setState', payload: inputSlice});
-        let generalInfo = getAbortionInfo();
-        let minorInfo = getMinorAbortionInfo();
+        let generalInfo = await getAbortionInfo();
+        let minorInfo = await getMinorAbortionInfo();
+        //console.log("This hsould be third:", generalInfo);
+        //console.log("This should be fourth");
         dispatch({type: 'adult/setState', payload: generalInfo});
         dispatch({type: 'minor/setState', payload: minorInfo});
 
 
-        console.log(store.getState());
+        console.log("Last", store.getState());
         navigate('/states', {replace: true});
     }
 

@@ -1,15 +1,11 @@
-import { fonts, colors } from "../fonts_colors";
+import {text} from './showcaseStyles';
+import React from 'react';
 
-export const text = {
-    gridRow: '2',
-    gridColumn:'1/3',
-    fontFamily: fonts.textLight.fontFamily,
-    color: colors.black,
-    fontSize: '1.9rem',
-    boxSizing: 'border-box',
-    width: '90%',
-    height: '100%',
-    padding: '3rem'
+export const Showcase = () => {
+return (
+        <p style={text}>Anonimous. Quick. Simple.<br/>
+        </p>
+)
 }
 
 
