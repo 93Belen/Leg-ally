@@ -5,6 +5,10 @@ import { selectAge, selectAllStates, selecthealthRisk, selectLmp, selectMinorsIn
 
 
 export const Map = () => {
+    // All states
+    const statesOfAmericaArr = ['Alabama','Alaska','American Samoa','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','District of Columbia','Federated States of Micronesia','Florida','Georgia','Guam','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Marshall Islands','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Northern Mariana Islands','Ohio','Oklahoma','Oregon','Palau','Pennsylvania','Puerto Rico','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virgin Island','Virginia','Washington','West Virginia','Wisconsin','Wyoming'];
+
+
     // Colors
     let red = 'B67249';
     let orange = 'F1AC44';
@@ -13,7 +17,6 @@ export const Map = () => {
     let green = '7AB748';
     // Selectors
     let age = useSelector(selectAge);
-    let state = useSelector(selectState);
     let lmpInput = useSelector(selectLmp);
     let rapeInput = useSelector(selectRape);
     let healthInput = useSelector(selecthealthRisk);
@@ -22,7 +25,6 @@ export const Map = () => {
     // weeks since last menstrual period
     let lmp = lmpInput;
     // Where is the user
-    let homeState = state;
     // Speacial case?
     let rape = rapeInput;
     let healthRisk = healthInput;
@@ -56,12 +58,25 @@ export const Map = () => {
             }
         }
 
+        // Check states with no info
+        for(const state of statesOfAmericaArr){
+            let stateSvg = document.getElementById(`${state.toLowerCase()}`);
+            if(stateSvg !== null){
+                stateSvg.style.fill = "lightgrey";
+                stateSvg.dataset.display = "No data available";
+                stateSvg.addEventListener('mouseover', showLabel);
+                stateSvg.addEventListener('mouseout', goBackToNormal);
+            }
+        }
 
 
         // Check Lmp -> Get states where is legal regarding lmp (the states where abortion is ilegal have lmp = 0. So those are discarted here as well)
         for(const state in allStates){
+            // Avoid spaces in name
+            let arrName = state.split(" ");
+            console.log(arrName.join(""))
             // Grab state
-            let stateSvg = document.getElementById(`${state.toLowerCase()}`);
+            let stateSvg = document.getElementById(`${arrName.join("").toLowerCase()}`);
             // If abortion is ilegal
             if(allStates[state]["banned_after_weeks_since_LMP"] === 0){
                 if(stateSvg !== null){
@@ -219,8 +234,6 @@ export const Map = () => {
 
 
         }
-
-
         
     })
 
@@ -232,7 +245,7 @@ export const Map = () => {
             <line x1="460" x2="460" y2="180" stroke="#211A12" stroke-width="0.5"/>
               <svg viewBox="0 0 410 270" fill="hsla(34, 47%, 97%, 1)" xmlns="http://www.w3.org/2000/svg">
     <path d="M339 101.528L329.5 103.5V108M339 101.528L356 98L360 109H364L362 121.5L360 118.5L362 114L360 112H356V106.5L355 102L353.5 109L356 114L357 118.5L351 115.5L349 112H347.5L349 108L345.5 106.5L343.5 104.5L341.5 106.5L340 104.5L343.5 103.5L339 101.528Z" stroke="black" id='maryland' stroke-width="0.5"/>
-    <path d="M363 105L365 108.5H360L356.5 98V95.5H360L361.5 91L357.5 87V85L360 82V80L367.5 83L368.5 86L366.5 88H368.5L369.5 95.5L366.5 100.5L365 103.5V102L359 98L363 105Z" stroke="black" id='newJersey/Delaware' stroke-width="0.5"/>
+    <path d="M363 105L365 108.5H360L356.5 98V95.5H360L361.5 91L357.5 87V85L360 82V80L367.5 83L368.5 86L366.5 88H368.5L369.5 95.5L366.5 100.5L365 103.5V102L359 98L363 105Z" stroke="black" id='newjersey' stroke-width="0.5"/>
     <path d="M369 86L374 84.5L380.5 79.5L379 78L374 81.5H371.5L369 83.5L374 78L380.5 75L379 69.5L369 72L368.5 83" stroke="black" id='connecticut' stroke-width="0.5"/>
     <path d="M329.5 108.5V103.5H327.5L323 104.5L320 99V105.5L314 110V114H311.5V118L308.5 119.5V123L314 127L316 130L327.5 125.5L329.5 114L331.5 115.5H334.5V112L336.75 108.25L339 104.5L344 103.5L338 101.5L329.5 108.5Z" stroke="black" id='westVirginia' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M380 62H372V54V50V47.5L373.5 44.5V40.5V37H375.5L381.5 54L383.5 56.5L380 62Z" stroke="black" id='newHampshire' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -241,11 +254,11 @@ export const Map = () => {
     <path d="M383 73.5L381.5 68.5L378.5 70L380.5 72.5V75.5L383 73.5Z" stroke="black" id='rhodeIsland' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M271 92.5H269L271 115.5L270.5 117V118.5L272.5 120.5L269 126.5V129.5H273.5L276.5 130.5L277.5 128L279.5 129.5L281 125L282.5 127H284.5L285 125.5L286 125V122H287L287.5 118L289.5 120.5L291.5 118V115.5L288 90.5L287.5 89.5L272.5 91L271 92.5Z" stroke="blackk" id='indiana' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M322.5 79.5L318.5 82L320 96.5L320.5 99.5L321 100.5L322.5 104.5L356 98V96L360 95L361.5 90.5L358 87L357.5 85L360 82V79.5H358L354 75L323.5 82L322.5 79.5Z" stroke="black" id='pennsylvania' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M328 73.5L323 79V79.5L324 81L354.5 74.5L358 79L360.5 78.5V80L367 82.5L368.5 80L366 57H364V54L363 53.5L363.5 49L360.5 43.5L350.5 45.5L343 55.5V57H345V61.5L341 65L338.5 65.5L336.5 67L333.5 65.5L326 68.5L328 73.5Z" stroke="black" id='newYork' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M328 73.5L323 79V79.5L324 81L354.5 74.5L358 79L360.5 78.5V80L367 82.5L368.5 80L366 57H364V54L363 53.5L363.5 49L360.5 43.5L350.5 45.5L343 55.5V57H345V61.5L341 65L338.5 65.5L336.5 67L333.5 65.5L326 68.5L328 73.5Z" stroke="black" id='newyork' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M372.5 39.5L361 43L364 48.5L363 53L364.5 53.5V56.5H366.5L367.5 64L371.5 62V56.5V53L372.5 49.5L371.5 47.5L374 45L373.5 43L372.5 39.5Z" stroke="black" id='vermont' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M268.5 92.5L265.5 85L246 86.5L249 90.5L247.5 92.5L247 95.5L241.5 96.5L244 101L242 104L241.5 105L240.5 107.5V112L247.5 118V121.5H250L251.5 122L250 127L257.5 133.5V137L259.5 139L261.5 136.5L265.5 138L266.5 136.5L265 135L268.5 133V132.5V130V127L272 120L270 118.5V116.5L271 115L268.5 92.5Z" stroke="black" id='illinois' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M76 23L78.5 12.5L116 19L153.874 23.0454C153.449 23 152.205 61.4295 151.5 61.5C146.5 62 133 59.5 129 59.5C125.8 59.5 111 57.5 104 56.5L103 59.5L101.5 56.5L97.5 59L90.5 59.5L89.5 55H88L89 52L88 51.5L86.5 51V50L85 45.5L82.5 47.5L81.5 46.5L82 46L83.5 43.5V41L85.5 36.5L83.5 35.5L77.5 28V24.5L76 23Z" stroke="black" id='montana' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M200 24.5L153.5 23L152.5 53L202.5 55L204.5 53L203.5 50.5L202.5 46.5L201.5 36L199 32L200 24.5Z" stroke="black" id='northDakota' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M200 24.5L153.5 23L152.5 53L202.5 55L204.5 53L203.5 50.5L202.5 46.5L201.5 36L199 32L200 24.5Z" stroke="black" id='northdakota' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M201 57.5L201.5 55.5L204 53L203 50L202 46.5L201.5 36L199 31.5L199.5 24.5H211.5V21.5H214L215.5 27H227L231 31L232.5 30L236.5 33L241 30.5L243.5 31L248.5 32L245.5 35.5H242L232 45.5V53L228 55.5L229.5 59V65L233.5 69H236.5L239.5 71.5L240.5 77.5H204V60.5L201 57.5Z" stroke="black" id='minnesota' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M286.5 42.5L285 43.5V44H279L278.5 42.5L277 43.5L273 44L269 45.5L267 45L265 46L264 45.5L261.5 43H258.5L258 43.5H256.5V41.5L259.5 37.5L257.5 38L251 43.5L249 44L245 47L247 49L253 49.5L254.5 51H259.5L262.5 54L265 57.5L268.5 51L270.5 53L272.5 49.5L276 50L277.5 48H280L283 50V48H291V46.5L288.5 47L286.5 42.5Z" stroke="black" class='michigan' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M50.5 6.5C48.5 6.1 38 2.66667 33 1V4.5H31V8H28.5L21.5 3.5L20.5 6.5V9.5L21 10.5V18.5L23 20.5L20.5 23L19.5 25L20.5 27H23L23.5 29L26.5 30V34.5L29.5 36.5L31 35.5L34.5 36.5L37 38.5H40.5H42.5L45 37.5L66 39C68 29.6667 71.7 11 70.5 11C69 11 53 7 50.5 6.5Z" stroke="black" id='washington' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -258,7 +271,7 @@ export const Map = () => {
     <path d="M68 139.5L78 82L58.5 77.5L36.5 73L29 102L61.5 147L63.5 137.5L68 139.5Z" stroke="black" id='nevada' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M107.5 136L70 130.5L78 82L99.5 85.5L98.5 94.5L112.5 97.5L107.5 136Z" stroke="black" id='utah' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M164 101.5L112.5 97.5L108 136L136 139.5C142.4 140.3 155.667 141.333 161.5 141L164 101.5Z" stroke="black" id='colorado' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M202 55L152.5 52.5L151 66.5L150 80.5L189 82.5L193 87.5L194.5 84.5H199L199.5 86.5H203L204 82.5V77.5V61L201 57.5L202 55Z" stroke="black" id='southDakota' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M202 55L152.5 52.5L151 66.5L150 80.5L189 82.5L193 87.5L194.5 84.5H199L199.5 86.5H203L204 82.5V77.5V61L201 57.5L202 55Z" stroke="black" id='southdakota' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M149 100.5L150.5 81L188.5 82.5L193 87L194.5 84.5H199V87H203.5L204.5 90.5L208 94L206.5 98L208 101.5L209 108.5L212 112L164 111V101.5L149 100.5Z" stroke="black" id='nebraska' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M6 67.5L7.5 65.5L36.5 73L29 102L61.5 146.5L62.5 153.5L65 157L60.5 159L59.5 162.5L58 164.5L59.5 168.5V171L36.5 168.5V161.5L31.5 155.5H29V151.5H26.5L22 146.5L13.5 143.5L15.5 137H13.5L15.5 134L11.5 128L8.5 121.5L11.5 119.5V117.5L7.5 116.5V110.5L10 112.5V107.5H15.5L10 105.5L7.5 107.5L4.5 105.5L6 103L3 97V91L4.5 87.5L1 80L6 75V73L7.5 71.5L6 67.5Z" stroke="black" id='california' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M83.5 188.5L56.5 172L59.5 171V168.5L58 164.5L59.5 162L60.5 159L64.5 157L62.5 153L61.5 146.5L63.5 137.5L68 139.5L69.5 130.5L108 136L101 190.5L83.5 188.5Z" stroke="black" id='arizona' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -276,8 +289,8 @@ export const Map = () => {
     <path d="M290 156.5L271 157.5V192L273 203L274.5 204.5L275.5 199.5V204.5L280.5 203L278 197L299 194V192L297.5 187L299 180.5L296.5 177.5L290 156.5Z" stroke="black" id='alabama' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M284 200L280.5 203L278 197L298.5 194.5H301L312.5 194L323 193.5L324.5 192H328.5L330 193C330 194.667 330.5 198.9 332.5 202.5C334.5 206.1 338 210.333 339.5 212L338 213L348.5 229L347 243.5L340.5 244.5L338 240L334.5 238.5L330 229L328 231L324 226.5L325.5 223V220.5L322.5 223V213L321 209H317L311 202.5H308.5L306.5 204.5L298.5 207L297 204.5L290 200L284 202.5V200Z" stroke="black" id='florida' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M297 177L290 156L308.5 153.5V156L313 158.5L317 163.5L319 166H321L322 168.5L326 170.5V174L329 175.5V178L331.5 179L330.5 180.5V184L329 186.5L330.5 187L328.5 192H324L323 193.5L299.5 194.5V191.5L298 187L299.5 180.5L297 177Z" stroke="black" id='georgia' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M313.5 152L309 153V155.5L313.5 158.5L319 165L321.5 166L322.5 168L326 170L326.5 173.5L329.5 174.5V177.5L332.5 178.5L332 176H334V173.5L335.5 174.5L343.5 166L342 164L346 158.5L336.5 150.5L328.5 152L326 149.5L315 150.5L313.5 152Z" stroke="black" id='southCarolina' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M328.5 135L318.5 136V138L316 142.5H314.5L313 144.5L311 143L306 149L303 148V150L300 154L307.5 153L313 151.5L315 150L325.5 149L328.5 151.5L336.5 150L346.5 158L352.5 157V154L357.5 148L361 147L363 144L366 141L368 138L365.5 134L362 136V134L357.5 135L364.5 131.5L363 128L328.5 135Z" stroke="black" id='northCarolina' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M313.5 152L309 153V155.5L313.5 158.5L319 165L321.5 166L322.5 168L326 170L326.5 173.5L329.5 174.5V177.5L332.5 178.5L332 176H334V173.5L335.5 174.5L343.5 166L342 164L346 158.5L336.5 150.5L328.5 152L326 149.5L315 150.5L313.5 152Z" stroke="black" id='southcarolina' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M328.5 135L318.5 136V138L316 142.5H314.5L313 144.5L311 143L306 149L303 148V150L300 154L307.5 153L313 151.5L315 150L325.5 149L328.5 151.5L336.5 150L346.5 158L352.5 157V154L357.5 148L361 147L363 144L366 141L368 138L365.5 134L362 136V134L357.5 135L364.5 131.5L363 128L328.5 135Z" stroke="black" id='northcarolina' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M330 134.5L305.5 137.5L310.5 134.5V131.5L314 127.5L316 130.5L322 127.5L327.5 125.5V124L330 114.5L331 115.5H334.5V112L336.5 108.5L339 104.5L342 105.5L344 104L345 106.5L349 108.5L347.5 112L349 111L350.5 115.5L357.5 119V124L350 123L356 125.5L361 125L362.5 127.5L330 134.5Z" stroke="black" id='virginia' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <line x1="28.25" y1="57" x2="28.25" y2="257" stroke="#211A12" stroke-width="0.5"/>
