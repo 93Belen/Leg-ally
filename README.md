@@ -1,6 +1,6 @@
 ﻿# ![Group 3](https://user-images.githubusercontent.com/98275292/208926170-b0bd5d87-b6ba-4c89-860e-db8e7e1c6402.svg) Leg-ally
  
- > Leg-ally is a website where you can find out in what states is legal for you to get an abortion based on your particular case
+ > Leg-ally is a website that tells you in what states is legal for you to get an abortion based on your particular case
  
  
  <h3 align="left">Languages and Tools I used:</h3>
