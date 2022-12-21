@@ -2,7 +2,7 @@ export const colors = {
     white: 'hsla(34, 47%, 97%, 1)', // Background
     cream: 'hsla(34, 45%, 90%, 1)', // NavBar button (not active) & Submit form button
     pink:'hsla(23, 43%, 82%, 1)', // NavBar button (active) & Form background
-    black: 'hsla(32, 29%, 10%, 1' // Text & Borders
+    black: 'hsla(32, 29%, 10%, 1)' // Text & Borders
 }
 
 export const fonts = {
@@ -36,5 +36,7 @@ export const fonts = {
 export const svg = {
     gridRow: '2',
     gridColumn:'1/3',
-    width: '70vw'
+    width: '100%',
+    height: '100%',
+    marginLeft: '-2rem'
 }

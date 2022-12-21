@@ -1,65 +1,50 @@
 import {fonts, colors} from '../fonts_colors';
-import background from "../background.jpg";
 
 export const formDiv = {
     boxSizing: 'border-box',
     gridRow: '2',
-    gridColumn:'1/3',
+    gridColumn:'3',
+    width: '100%',
     fontFamily: fonts.textLight.fontFamily,
     color: colors.black,
-    fontSize: '1.8rem'
+    fontSize: '1.4vw',
+    height: '100%'
 }
 
 export const form = {
     boxSizing: 'border-box',
-    borderRadius: '35% 0%',
+    borderRadius: '5%',
     display: 'grid',
-    gridTemplateColumns: 'repeat(2, 45%)',
-    gridTemplateRows: '16% 16% 16% 13% 13% 20%',
+    gridTemplateColumns: '55% 45%',
+    gridTemplateRows: 'repeat(5, 1fr)',
     background: 'linear-gradient(115.47deg, #E4CBBC 6.83%, rgba(228, 203, 188, 0.6) 44.25%, rgba(228, 203, 188, 0.4) 95.69%)',
-    boxShadow: `6em 0em 0em ${colors.cream}`,
     backdropFilter: 'blur(90%)',
-    height: '70%',
-    width: '60%',
-    marginLeft: '9rem',
-    marginTop: '5.4rem',
+    height: '85%',
+    width: '95%',
     alignItems: 'center',
     justifyItems: 'end',
-    paddingTop: '5rem',
-    paddingLeft: '5rem'
+    padding: '1.5rem 3.5rem'
 }
 
 export const label = {
     justifySelf: 'start',
-    paddingLeft: '3rem'
+    paddingLeft: '1rem'
 }
 export const input = {
-    borderRadius: '1%',
+    borderRadius: '2%',
     border: 'none',
     boxShadow: 'inset 0 0.05em 0.1em rgba(0, 0, 0, 0.25)',
-    height: '45%',
+    height: '35%',
     width: 'fit-content',
-    maxWidth: '70%',
-    fontSize: '1.8rem',
+    maxWidth: '90%',
+    fontSize: '1.4vw',
     textAlign: 'right',
     padding: '0.3rem',
     fontFamily: fonts.textLight.fontFamily
 }
-export const button = {
-    gridColumn: '2',
-    gridRow: '6',
-    fontFamily: fonts.textThin,
-    fontSize: '1.6rem',
-    boxShadow: '0em 0.2em 0.2em rgba(0, 0, 0, 0.25)',
-    borderRadius: '5%',
-    border: 'none',
-    background: colors.black,
-    color: colors.white,
-    width: '45%',
-    height: '45%'
-}
+
 export const checkboxDiv = {
-   gridRow: '5',
+   gridRow: '4',
    gridColumn: '1/3',
    justifySelf: 'center',
    border: 'none'

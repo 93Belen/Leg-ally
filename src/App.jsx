@@ -2,6 +2,7 @@ import {Showcase} from './components/showcase/Showcase.jsx';
 import { appStyle } from './AppStyle.js';
 import { Form } from './components/form/Form.jsx';
 import { svg } from './components/fonts_colors';
+import { Map } from './components/map/Map'
 
 // Added Divs to visualize where the rest of the element go
 function App() {
@@ -14,7 +15,7 @@ function App() {
             <line x1="28.25" y1="57" x2="28.25" y2="257" stroke="#211A12" stroke-width="0.5"/>
             <line y1="221.75" x2="255" y2="221.75" stroke="#211A12" stroke-width="0.5"/>
         </svg>
-      <Showcase />
+      <Map />
       <div style={{gridColumn:'3', width: 200, border:'black solid 1px'}}>Side Thing</div>
       <div style={{gridColumn:'1/4', border:'black solid 1px'}}>Rest</div>
     </div>

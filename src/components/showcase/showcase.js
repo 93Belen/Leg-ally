@@ -1,27 +1,16 @@
-import { fonts, colors } from "../fonts_colors";
-import background from "../background.jpg";
+import {text} from './showcaseStyles';
+import React from 'react';
 
-export const showCaseStyle = {
-    gridRow: '2',
-    boxSizind: 'border-box',
-    gridColumn:'1/3',
-    fontFamily: fonts.textLight.fontFamily,
-    color: colors.black,
-    fontSize: '1.9rem',
-    padding: '0rem 14rem 0rem 5.3rem',
-}
-export const text = {
-    boxSizind: 'border-box',
-    margin: '4rem 0rem 0rem 1rem',
-    padding: '50px',
-    width: '77%',
-    height: '45%'
+export const Showcase = () => {
+return (
+        <p style={text}>Anonimous. Quick. Simple.<br/>
+        Answer the questions in the form and find out where is legal for you to get an abortion.<br/>
+        After you have seen the results, find out more by calling or serching for each particular state.<br/>
+        We try to keep the information as up to date as possible, but please, double check with other sources.<br/>
+        You need help, and here you have an ally.<br/>
+        </p>
+)
 }
 
-export const button = {
-    gridRow: '2',
-    gridColumn:'3',
-    marginLeft: '55rem'
-}
 
 
