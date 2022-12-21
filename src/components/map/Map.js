@@ -43,7 +43,7 @@ export const Map = () => {
             p.setAttribute("fill", "black");
             p.setAttribute("class", "created-p");
             p.style.fontFamily = fonts.titleLight.fontFamily;
-            p.style.fontSize = '17px';
+            p.style.fontSize = '14px';
             e.target.parentNode.appendChild(p);
             p.innerHTML = message;
             console.log(p);

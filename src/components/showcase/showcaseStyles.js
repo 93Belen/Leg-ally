@@ -9,7 +9,7 @@ export const text = {
     boxSizing: 'border-box',
     width: '90%',
     height: '100%',
-    padding: '3rem'
+    padding: '7rem 5rem 0rem 5rem'
 }
 
 

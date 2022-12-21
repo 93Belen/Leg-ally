@@ -1,4 +1,4 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import adultSlice from "../Slices/adultSlice";
 import homeStateSlice from "../Slices/homeStateSlice";
 import inputsSlice from "../Slices/inputsSlice";
